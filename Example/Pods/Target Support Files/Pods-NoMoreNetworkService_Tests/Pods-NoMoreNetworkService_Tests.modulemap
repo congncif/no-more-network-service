@@ -1,0 +1,6 @@
+framework module Pods_NoMoreNetworkService_Tests {
+  umbrella header "Pods-NoMoreNetworkService_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

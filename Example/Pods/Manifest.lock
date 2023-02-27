@@ -1,0 +1,16 @@
+PODS:
+  - NoMoreNetworkService (1.0.0)
+
+DEPENDENCIES:
+  - NoMoreNetworkService (from `../`)
+
+EXTERNAL SOURCES:
+  NoMoreNetworkService:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  NoMoreNetworkService: 0716d82ad22fa13d81b4a802af40c145369e403b
+
+PODFILE CHECKSUM: e79cf614abaeec34ba242b0ad50bd65ad504a952
+
+COCOAPODS: 1.11.3

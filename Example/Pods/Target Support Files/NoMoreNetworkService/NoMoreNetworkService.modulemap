@@ -1,0 +1,6 @@
+framework module NoMoreNetworkService {
+  umbrella header "NoMoreNetworkService-umbrella.h"
+
+  export *
+  module * { export * }
+}
