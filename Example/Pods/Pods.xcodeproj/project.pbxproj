@@ -10,6 +10,7 @@
 		0450A7E2FBB228E9AEA0417456F6A973 /* ServerTrustConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84C52CF9F5EB5CE893256A2963E787 /* ServerTrustConfiguration.swift */; };
 		14497776004429CDCFB67486C4D561F5 /* NoMoreNetworkService-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C93C97BD47725A12D943287B96FFE4AF /* NoMoreNetworkService-dummy.m */; };
 		1BF2E3563EF7E6E9F2D950E57C271B42 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		2789792F2B22D0A000610A9A /* NetworkLogMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789792E2B22D0A000610A9A /* NetworkLogMonitor.swift */; };
 		322782E7755BB5B78D1E04C7EE3F16FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		4B1AA6806F0BCC742A02477E9225838B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC014E7E6D6B76D3521BB73653599D /* NetworkService.swift */; };
 		56A033712FD10CE2E99FEE570770BCD4 /* NetworkServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E3F2FEAEA788FBBBEF3A9440148A81 /* NetworkServiceProvider.swift */; };
@@ -50,12 +51,13 @@
 		1AFAEB4964F8A72540AC0C22E38B61B7 /* Pods-NoMoreNetworkService_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NoMoreNetworkService_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		21700EE586C67FE3535DEF3DABBEAAAD /* Pods-NoMoreNetworkService_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NoMoreNetworkService_Tests-Info.plist"; sourceTree = "<group>"; };
 		2418DBDB7836E149274951CB6D29C9C7 /* NoMoreNetworkService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NoMoreNetworkService.release.xcconfig; sourceTree = "<group>"; };
+		2789792E2B22D0A000610A9A /* NetworkLogMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkLogMonitor.swift; path = NoMoreNetworkService/Classes/NetworkLogMonitor.swift; sourceTree = "<group>"; };
 		2B9AC39BCDBE7C35BE4FEC811BCEB01E /* Pods-NoMoreNetworkService_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NoMoreNetworkService_Tests-umbrella.h"; sourceTree = "<group>"; };
 		2C21993FB70CBB7CB47558D0014D9D73 /* NetworkURLSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkURLSession.swift; path = NoMoreNetworkService/Classes/NetworkURLSession.swift; sourceTree = "<group>"; };
 		43AAF77CC32FECEAC0D0FA968EC02DE6 /* Pods-NoMoreNetworkService_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NoMoreNetworkService_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		43F4183F9DBC20BE8130BA1FEF9770DC /* Pods-NoMoreNetworkService_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NoMoreNetworkService_Example-umbrella.h"; sourceTree = "<group>"; };
-		4B275F32840FA557FB639FC97F210E29 /* NoMoreNetworkService.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = NoMoreNetworkService.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		4FA7D227F0D0282C1E8B181708A9F496 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		4B275F32840FA557FB639FC97F210E29 /* NoMoreNetworkService.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = NoMoreNetworkService.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		4FA7D227F0D0282C1E8B181708A9F496 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		52099814985E9AAB0A281BAE50D7362D /* Pods-NoMoreNetworkService_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-NoMoreNetworkService_Example"; path = Pods_NoMoreNetworkService_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEB33DE39A4440C4386B5E339849ADC /* NetworkServiceBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkServiceBuilder.swift; path = NoMoreNetworkService/Classes/NetworkServiceBuilder.swift; sourceTree = "<group>"; };
 		63E3F2FEAEA788FBBBEF3A9440148A81 /* NetworkServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkServiceProvider.swift; path = NoMoreNetworkService/Classes/NetworkServiceProvider.swift; sourceTree = "<group>"; };
@@ -66,7 +68,7 @@
 		8058008031F3D9D7BCE84756EA71D016 /* NetworkRequestRetrier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkRequestRetrier.swift; path = NoMoreNetworkService/Classes/NetworkRequestRetrier.swift; sourceTree = "<group>"; };
 		9AE431BB0DC377116F13A55B5EA52427 /* NetworkRequestAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkRequestAdapter.swift; path = NoMoreNetworkService/Classes/NetworkRequestAdapter.swift; sourceTree = "<group>"; };
 		9C11885CA5D79DAE5395BDDBCF156E78 /* NoMoreNetworkService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NoMoreNetworkService.debug.xcconfig; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A06A1742EC789F328479444CA9475924 /* Pods-NoMoreNetworkService_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-NoMoreNetworkService_Tests"; path = Pods_NoMoreNetworkService_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4AF7DE002BDD87F21738917F813CA30 /* Pods-NoMoreNetworkService_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-NoMoreNetworkService_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		B5A05231F3677A924E39D3F9F22F84CF /* Pods-NoMoreNetworkService_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NoMoreNetworkService_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,7 +78,7 @@
 		C7D93224EBFDC7BB5F98AD345A2F3ABB /* Pods-NoMoreNetworkService_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NoMoreNetworkService_Example-dummy.m"; sourceTree = "<group>"; };
 		C93C97BD47725A12D943287B96FFE4AF /* NoMoreNetworkService-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NoMoreNetworkService-dummy.m"; sourceTree = "<group>"; };
 		D44A2CBF2DE99416F3E89CD3E19AEA30 /* NoMoreNetworkService-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NoMoreNetworkService-prefix.pch"; sourceTree = "<group>"; };
-		E6299E831C0B78D404D7817A5DB999E1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		E6299E831C0B78D404D7817A5DB999E1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E83748CD0BE90C48A77A021874A16608 /* NoMoreNetworkService-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NoMoreNetworkService-umbrella.h"; sourceTree = "<group>"; };
 		E8A005B4307FCBCE2B4141CB9746DF7D /* Pods-NoMoreNetworkService_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-NoMoreNetworkService_Tests-dummy.m"; sourceTree = "<group>"; };
 		EF186B5A4E596222BB8655ABCF727C80 /* Pods-NoMoreNetworkService_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NoMoreNetworkService_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				63E3F2FEAEA788FBBBEF3A9440148A81 /* NetworkServiceProvider.swift */,
 				2C21993FB70CBB7CB47558D0014D9D73 /* NetworkURLSession.swift */,
 				7D84C52CF9F5EB5CE893256A2963E787 /* ServerTrustConfiguration.swift */,
+				2789792E2B22D0A000610A9A /* NetworkLogMonitor.swift */,
 				FA767F89F5277D67715B5EE590D3AF0D /* Pod */,
 				D97063B36933325BE9EE106EBFB51111 /* Support Files */,
 			);
@@ -396,6 +399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2789792F2B22D0A000610A9A /* NetworkLogMonitor.swift in Sources */,
 				9A060887FAFE4DD70546959DCF2B4DAE /* NetworkRequestAdapter.swift in Sources */,
 				9FC1DA219AD29ADD7D4C460780605C4C /* NetworkRequestRetrier.swift in Sources */,
 				7F8B727D7C6ABEB8706EADBD5630F8D2 /* NetworkResponseAdapter.swift in Sources */,
@@ -555,8 +559,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
