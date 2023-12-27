@@ -18,16 +18,10 @@ public protocol NetworkService {
 }
 
 public extension NetworkService {
-    func sendDataRequest(_ urlRequest: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) -> NetworkURLSessionTask {
-        sendDataRequest(urlRequest, task: .data, completion: completion)
-    }
-}
-
-public extension NetworkService {
     @discardableResult
     func sendDataRequest<ResponseModel: Decodable>(
         _ urlRequest: URLRequest,
-        task: NetworkTask,
+        task: NetworkTask = .data,
         decoder: JSONDecoder = {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
