@@ -12,6 +12,7 @@ import UIKit
 class ViewController: UIViewController {
     lazy var service: NetworkService = NetworkServiceBuilder.default
         .build()
+        .withDefaultCacheStorage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
