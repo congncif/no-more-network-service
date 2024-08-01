@@ -25,7 +25,7 @@ final class CacheableNetworkService: NetworkService {
         self.underlyingService = underlyingService
     }
 
-    func sendDataRequest(_ urlRequest: URLRequest, task: NetworkTask, completion: @escaping (Result<Data, any Error>) -> Void) -> any NetworkURLSessionTask {
+    func sendDataRequest(_ urlRequest: URLRequest, task: NetworkTask, progressHandler: ((Double) -> Void)?, completion: @escaping (Result<Data, any Error>) -> Void) -> any NetworkURLSessionTask {
         var finalCompletion = completion
 
         if let cacheStorage = cacheStorageProvider.cacheStorage(forRequest: urlRequest) {
@@ -67,7 +67,7 @@ final class CacheableNetworkService: NetworkService {
             }
         }
 
-        return underlyingService.sendDataRequest(urlRequest, task: task, completion: finalCompletion)
+        return underlyingService.sendDataRequest(urlRequest, task: task, progressHandler: progressHandler, completion: finalCompletion)
     }
 
     private let cacheQueue = DispatchQueue(label: "no-more-network-service.cache", attributes: .concurrent)

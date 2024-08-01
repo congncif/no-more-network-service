@@ -7,7 +7,5 @@ target 'NoMoreNetworkService_Example' do
 
   target 'NoMoreNetworkService_Tests' do
     inherit! :search_paths
-
-    
   end
 end

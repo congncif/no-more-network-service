@@ -73,8 +73,9 @@ public final class NetworkServiceBuilder {
     }
 
     public func build() -> NetworkService {
+        let delegateQueue = OperationQueue()
         let sessionDelegate = SessionDelegate(serverTrustConfiguration: serverTrustConfiguration)
-        let session = URLSession(configuration: configuration, delegate: sessionDelegate, delegateQueue: .main)
+        let session = URLSession(configuration: configuration, delegate: sessionDelegate, delegateQueue: delegateQueue)
         let requestAdapter = CompositeRequestAdapter(adapters: requestAdapters)
         let responseAdapter = CompositeResponseAdapter(adapters: responseAdapters)
         let finalRetrier: NetworkRequestRetrier = FunnelRequestRetrier(retriers: retriers)

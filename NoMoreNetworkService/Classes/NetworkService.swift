@@ -11,13 +11,24 @@ public enum NetworkTask {
     case data
     case uploadData(_ data: Data)
     case uploadFile(_ fileURL: URL)
+    case download(destinationURL: (_ suggestedFilename: String?) -> URL?)
+
+    public static func download(destinationURL: URL? = nil) -> NetworkTask {
+        return .download(destinationURL: { _ in destinationURL })
+    }
 }
 
 public protocol NetworkService {
-    func sendDataRequest(_ urlRequest: URLRequest, task: NetworkTask, completion: @escaping (Result<Data, Error>) -> Void) -> NetworkURLSessionTask
+    @discardableResult
+    func sendDataRequest(_ urlRequest: URLRequest, task: NetworkTask, progressHandler: ((Double) -> Void)?, completion: @escaping (Result<Data, Error>) -> Void) -> NetworkURLSessionTask
 }
 
 public extension NetworkService {
+    @discardableResult
+    func sendDataRequest(_ urlRequest: URLRequest, task: NetworkTask, completion: @escaping (Result<Data, Error>) -> Void) -> NetworkURLSessionTask {
+        sendDataRequest(urlRequest, task: task, progressHandler: nil, completion: completion)
+    }
+
     @discardableResult
     func sendDataRequest<ResponseModel: Decodable>(
         _ urlRequest: URLRequest,
@@ -27,8 +38,9 @@ public extension NetworkService {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return decoder
         }(),
+        progressHandler: ((Double) -> Void)? = nil,
         completion: @escaping (Result<ResponseModel, Error>) -> Void) -> NetworkURLSessionTask {
-        sendDataRequest(urlRequest, task: task) { (result: Result<Data, Error>) in
+        sendDataRequest(urlRequest, task: task, progressHandler: progressHandler) { (result: Result<Data, Error>) in
             switch result {
             case let .success(data):
                 do {
@@ -51,9 +63,10 @@ public extension NetworkService {
     func sendDataRequest<RequestModel: NetworkRequestBaseModel, ResponseModel: DecodableNetworkResponseModel>(
         requestModel: RequestModel,
         responseModel: ResponseModel.Type = ResponseModel.self,
+        progressHandler: ((Double) -> Void)? = nil,
         completion: @escaping (Result<ResponseModel, Error>) -> Void) -> NetworkURLSessionTask {
         let urlRequest = requestModel.buildURLRequest()
-        return sendDataRequest(urlRequest, task: requestModel.task) { (result: Result<Data, Error>) in
+        return sendDataRequest(urlRequest, task: requestModel.task, progressHandler: progressHandler) { (result: Result<Data, Error>) in
             switch result {
             case let .success(data):
                 do {
