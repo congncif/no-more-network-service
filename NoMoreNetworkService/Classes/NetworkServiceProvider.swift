@@ -9,11 +9,12 @@ import Foundation
 import Security
 
 final class NetworkServiceProvider: NetworkService {
-    init(session: NetworkURLSession, requestAdapter: NetworkRequestAdapter, responseAdapter: NetworkResponseAdapter, retrier: NetworkRequestRetrier, sessionDelegate: SessionDelegate) {
+    init(session: NetworkURLSession, requestAdapter: NetworkRequestAdapter, responseAdapter: NetworkResponseAdapter, retrier: NetworkRequestRetrier, maxRetries: Int, sessionDelegate: SessionDelegate) {
         self.session = session
         self.requestAdapter = requestAdapter
         self.responseAdapter = responseAdapter
         self.retrier = retrier
+        self.maxRetries = maxRetries
         self.sessionDelegate = sessionDelegate
     }
 
@@ -22,6 +23,7 @@ final class NetworkServiceProvider: NetworkService {
     let requestAdapter: NetworkRequestAdapter
     let responseAdapter: NetworkResponseAdapter
     let retrier: NetworkRequestRetrier
+    let maxRetries: Int
 
     lazy var operationQueue: OperationQueue = {
         let queue = OperationQueue()
@@ -32,7 +34,7 @@ final class NetworkServiceProvider: NetworkService {
     }()
 
     func sendDataRequest(_ urlRequest: URLRequest, task: NetworkTask, completion: @escaping (Result<Data, Error>) -> Void) -> NetworkURLSessionTask {
-        let operation = NetworkTaskExecutionOperation(session: session, requestAdapter: requestAdapter, responseAdapter: responseAdapter, retrier: retrier, urlRequest: urlRequest, task: task, completion: completion)
+        let operation = NetworkTaskExecutionOperation(session: session, requestAdapter: requestAdapter, responseAdapter: responseAdapter, retrier: retrier, maxRetries: maxRetries, urlRequest: urlRequest, task: task, completion: completion)
         operationQueue.addOperation(operation)
 
         let task = NetworkOperationTask(operation: operation)
@@ -86,11 +88,12 @@ final class SessionDelegate: NSObject, URLSessionDelegate {
 }
 
 final class NetworkTaskExecutionOperation: Operation {
-    init(session: NetworkURLSession, requestAdapter: NetworkRequestAdapter, responseAdapter: NetworkResponseAdapter, retrier: NetworkRequestRetrier, urlRequest: URLRequest, task: NetworkTask, completion: @escaping (Result<Data, Error>) -> Void) {
+    init(session: NetworkURLSession, requestAdapter: NetworkRequestAdapter, responseAdapter: NetworkResponseAdapter, retrier: NetworkRequestRetrier, maxRetries: Int, urlRequest: URLRequest, task: NetworkTask, completion: @escaping (Result<Data, Error>) -> Void) {
         self.session = session
         self.requestAdapter = requestAdapter
         self.responseAdapter = responseAdapter
         self.retrier = retrier
+        self.maxRetries = maxRetries
         self.urlRequest = urlRequest
         self.task = task
         self.completion = completion
@@ -100,6 +103,7 @@ final class NetworkTaskExecutionOperation: Operation {
     let requestAdapter: NetworkRequestAdapter
     let responseAdapter: NetworkResponseAdapter
     let retrier: NetworkRequestRetrier
+    let maxRetries: Int
     let urlRequest: URLRequest
     let task: NetworkTask
     let completion: (Result<Data, Error>) -> Void
@@ -133,10 +137,25 @@ final class NetworkTaskExecutionOperation: Operation {
         }
     }
 
-    private let stateQueue = DispatchQueue(label: "no-more-network.request.operation", attributes: .concurrent)
+    var retryCount: Int {
+        get {
+            counterQueue.sync {
+                _retryCount
+            }
+        }
+        set {
+            counterQueue.sync(flags: .barrier) {
+                _retryCount = newValue
+            }
+        }
+    }
+
+    private let stateQueue = DispatchQueue(label: "no-more-network.request.operation.state", attributes: .concurrent)
+    private let counterQueue = DispatchQueue(label: "no-more-network.request.operation.counter", attributes: .concurrent)
 
     /// Non thread-safe state storage, use only with locks
     private var stateStore: State = .ready
+    private var _retryCount: Int = 0
 
     override var isAsynchronous: Bool {
         true
@@ -174,7 +193,7 @@ final class NetworkTaskExecutionOperation: Operation {
         } else {
             state = .executing
             let task = self.task
-            
+
             requestAdapter.adapt(urlRequest) { [weak self] result in
                 switch result {
                 case let .success(request):
@@ -185,15 +204,7 @@ final class NetworkTaskExecutionOperation: Operation {
                                 self?.completion(newResult)
                                 self?.state = .finished
                             case let .failure(error):
-                                self?.retrier.retry(dueTo: error, completion: { [weak self] shouldRetry in
-                                    switch shouldRetry {
-                                    case .retryNow:
-                                        self?.main()
-                                    case .doNotRetry:
-                                        self?.completion(newResult)
-                                        self?.state = .finished
-                                    }
-                                })
+                                self?.attemptRetry(dueTo: error, rawResult: newResult)
                             }
                         })
                     })
@@ -203,6 +214,24 @@ final class NetworkTaskExecutionOperation: Operation {
                 }
             }
         }
+    }
+
+    private func attemptRetry(dueTo error: any Error, rawResult: Result<Data, Error>) {
+        guard retryCount < maxRetries else {
+            completion(rawResult)
+            state = .finished
+            return
+        }
+        retryCount += 1
+        retrier.retry(dueTo: error, completion: { [weak self] shouldRetry in
+            switch shouldRetry {
+            case .retryNow:
+                self?.main()
+            case .doNotRetry:
+                self?.completion(rawResult)
+                self?.state = .finished
+            }
+        })
     }
 
     private func performRequest(_ urlRequest: URLRequest, task: NetworkTask, completion: @escaping (Result<Data, Error>) -> Void) -> NetworkURLSessionTask {

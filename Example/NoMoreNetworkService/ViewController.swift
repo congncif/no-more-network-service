@@ -9,17 +9,21 @@
 import NoMoreNetworkService
 import UIKit
 
+final class TestRetrier: NetworkRequestRetrier {
+    func retry(dueTo error: any Error, completion: @escaping (RetryPlan) -> Void) {
+        completion(.retryNow)
+    }
+}
+
 class ViewController: UIViewController {
     lazy var service: NetworkService = NetworkServiceBuilder.default
+        .appending(retrier: TestRetrier())
         .build()
         .withDefaultCacheStorage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let request = EmployeeRequest()
-        let task = service.sendDataRequest(requestModel: request, responseModel: Response<[Employee]>.self) { result in
-            print(result)
-        }
+
 //        task.cancel()
     }
 
@@ -27,12 +31,25 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    @IBAction private func requestButtonTapped() {
+        let request = EmployeeRequest()
+        let task = service.sendDataRequest(requestModel: request, responseModel: Response<[Employee]>.self) { result in
+            print(result)
+        }
+    }
+
+    @IBAction private func renewServiceButtonTapped() {
+//        service = NetworkServiceBuilder.default
+//            .build()
+//            .withDefaultCacheStorage()
+    }
 }
 
 struct EmployeeRequest: NetworkRequestModel {
     var host: String = "dummy.restapiexample.com"
 
-    var path: String = "/api/v1/employees"
+    var path: String = "/api/v1/employees-x"
 
     var method: String = "GET"
 

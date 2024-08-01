@@ -7,12 +7,21 @@
 
 import Foundation
 
+public struct NetworkServiceOptions {
+    public init(maxRetries: Int = 1) {
+        self.maxRetries = maxRetries
+    }
+
+    public var maxRetries: Int
+}
+
 public final class NetworkServiceBuilder {
     var configuration: URLSessionConfiguration = .default
     var serverTrustConfiguration: ServerTrustConfiguration?
     var requestAdapters: [NetworkRequestAdapter] = []
     var responseAdapters: [NetworkResponseAdapter] = []
     var retriers: [NetworkRequestRetrier] = []
+    var options: NetworkServiceOptions = .init()
 
     public static var `default`: NetworkServiceBuilder {
         NetworkServiceBuilder()
@@ -20,6 +29,11 @@ public final class NetworkServiceBuilder {
 
     public func with(configuration: URLSessionConfiguration) -> Self {
         self.configuration = configuration
+        return self
+    }
+
+    public func with(options: NetworkServiceOptions) -> Self {
+        self.options = options
         return self
     }
 
@@ -69,6 +83,7 @@ public final class NetworkServiceBuilder {
                                       requestAdapter: requestAdapter,
                                       responseAdapter: responseAdapter,
                                       retrier: finalRetrier,
+                                      maxRetries: options.maxRetries,
                                       sessionDelegate: sessionDelegate)
     }
 }
