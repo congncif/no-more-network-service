@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name = "NoMoreNetworkService"
-  s.version = "1.3.0"
+  s.version = "1.4.0"
   s.summary = "An extension of URLSession for network requesting."
 
   # This description is used to generate tags and improve search results.

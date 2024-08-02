@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0050BF5D14DE6E3B42ADCED18A7765FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		19A0811AA7562E674B669E40E99D393B /* ServerTrustConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56E077AAAA83EF6103B9CE2154F7205 /* ServerTrustConfiguration.swift */; };
+		270FC3BE2C5C8E6600FBA76E /* NetworkRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270FC3BD2C5C8E6600FBA76E /* NetworkRequestSender.swift */; };
 		2E4A6B3661260707853CFF1827812B69 /* NoMoreNetworkService-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 66630DAF8FDCEB282E1FC2EE1CBECF88 /* NoMoreNetworkService-dummy.m */; };
 		322782E7755BB5B78D1E04C7EE3F16FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		38D9A7043C49800602C5753E8AC22874 /* CacheableNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699280BDDDA0E23AC83250265A316E83 /* CacheableNetworkService.swift */; };
@@ -57,6 +58,7 @@
 		1AFAEB4964F8A72540AC0C22E38B61B7 /* Pods-NoMoreNetworkService_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NoMoreNetworkService_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		211FF971914B287AF0E2DE030A62FE63 /* NetworkRequestRetrier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkRequestRetrier.swift; path = NoMoreNetworkService/Classes/NetworkRequestRetrier.swift; sourceTree = "<group>"; };
 		21700EE586C67FE3535DEF3DABBEAAAD /* Pods-NoMoreNetworkService_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NoMoreNetworkService_Tests-Info.plist"; sourceTree = "<group>"; };
+		270FC3BD2C5C8E6600FBA76E /* NetworkRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkRequestSender.swift; path = NoMoreNetworkService/Classes/NetworkRequestSender.swift; sourceTree = "<group>"; };
 		273A76ED75B9B07887A45B1C7607EEF2 /* NetworkService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkService.swift; path = NoMoreNetworkService/Classes/NetworkService.swift; sourceTree = "<group>"; };
 		2B9AC39BCDBE7C35BE4FEC811BCEB01E /* Pods-NoMoreNetworkService_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NoMoreNetworkService_Tests-umbrella.h"; sourceTree = "<group>"; };
 		36867D394910F67BCEF23C85570AB9FB /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				211FF971914B287AF0E2DE030A62FE63 /* NetworkRequestRetrier.swift */,
 				7D8E0C8FA01319579EB70AA4C8ECFA94 /* NetworkResponseAdapter.swift */,
 				273A76ED75B9B07887A45B1C7607EEF2 /* NetworkService.swift */,
+				270FC3BD2C5C8E6600FBA76E /* NetworkRequestSender.swift */,
 				5F1C84A6757BCD68C09FEFA93E3C3485 /* NetworkServiceBuilder.swift */,
 				0C78AEC64718D73F16E56A1DBB697E2B /* NetworkServiceProvider.swift */,
 				15AC001A6DF16DA0E2F4275B8A5207DE /* NetworkTaskExecutionOperation.swift */,
@@ -403,6 +406,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270FC3BE2C5C8E6600FBA76E /* NetworkRequestSender.swift in Sources */,
 				38D9A7043C49800602C5753E8AC22874 /* CacheableNetworkService.swift in Sources */,
 				9C136DC232D9337638FF58889CCE60D8 /* NetworkLogMonitor.swift in Sources */,
 				A23056F910937392CC8EDE98AB01030D /* NetworkRequestAdapter.swift in Sources */,

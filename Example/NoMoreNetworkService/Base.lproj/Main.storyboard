@@ -50,6 +50,14 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ShJ-Eq-Zoh">
                                 <rect key="frame" x="247" y="73.5" width="20" height="20"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eka-s0-ese">
+                                <rect key="frame" x="149" y="594" width="77" height="39"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ALz-EE-JLp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -57,6 +65,7 @@
                             <constraint firstItem="bwi-TV-sRC" firstAttribute="top" secondItem="0MX-vy-l1a" secondAttribute="bottom" constant="19" id="Kxo-PP-Cz3"/>
                             <constraint firstItem="0MX-vy-l1a" firstAttribute="top" secondItem="Hla-za-qif" secondAttribute="bottom" constant="22" id="QFd-g6-Ebg"/>
                             <constraint firstItem="ShJ-Eq-Zoh" firstAttribute="leading" secondItem="Hla-za-qif" secondAttribute="trailing" constant="16" id="Vix-ST-lR9"/>
+                            <constraint firstItem="eka-s0-ese" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Vvl-rv-nFx"/>
                             <constraint firstItem="0MX-vy-l1a" firstAttribute="centerX" secondItem="Hla-za-qif" secondAttribute="centerX" id="WOa-jf-NmC"/>
                             <constraint firstItem="iah-i5-Nya" firstAttribute="leading" secondItem="bwi-TV-sRC" secondAttribute="leading" id="XsC-ER-XMw"/>
                             <constraint firstItem="iah-i5-Nya" firstAttribute="trailing" secondItem="bwi-TV-sRC" secondAttribute="trailing" id="cVG-iy-mf1"/>
@@ -64,6 +73,7 @@
                             <constraint firstItem="Hla-za-qif" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="gLm-dG-a8d"/>
                             <constraint firstItem="bwi-TV-sRC" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="n6r-ip-saY"/>
                             <constraint firstItem="iah-i5-Nya" firstAttribute="top" secondItem="bwi-TV-sRC" secondAttribute="bottom" constant="8" id="xL7-rQ-plm"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="eka-s0-ese" secondAttribute="bottom" constant="34" id="zGc-cv-aLW"/>
                         </constraints>
                     </view>
                     <connections>

@@ -24,17 +24,27 @@ extension URLSession: NetworkURLSession {
             requestTask.resume()
             return requestTask
         case let .uploadData(data):
-            let uploadTask = uploadTask(with: request, from: data, completionHandler: completionHandler)
+            let uploadTask = uploadTask(with: request, from: data, completionHandler: { data, response, error in
+                progressHandler?(1)
+                completionHandler(data, response, error)
+            })
             uploadTask.observeProgress(handler: progressHandler)
+//            progressHandler?(0)
             uploadTask.resume()
             return uploadTask
         case let .uploadFile(url):
-            let uploadTask = uploadTask(with: request, fromFile: url, completionHandler: completionHandler)
+            let uploadTask = uploadTask(with: request, fromFile: url, completionHandler: { data, response, error in
+                progressHandler?(1)
+                completionHandler(data, response, error)
+            })
             uploadTask.observeProgress(handler: progressHandler)
+//            progressHandler?(0)
             uploadTask.resume()
             return uploadTask
         case let .download(destinationURL):
             let downloadTask = downloadTask(with: request, completionHandler: { url, response, error in
+                progressHandler?(1)
+
                 var finalURL: URL? = url
                 var finalError: Error? = error
 
@@ -69,13 +79,14 @@ extension URLSession: NetworkURLSession {
                 }
             })
             downloadTask.observeProgress(handler: progressHandler)
+//            progressHandler?(0)
             downloadTask.resume()
             return downloadTask
         }
     }
 }
 
-public protocol NetworkURLSessionTask {
+public protocol NetworkURLSessionTask: AnyObject {
     var taskIdentifier: Int { get }
 
     func cancel()

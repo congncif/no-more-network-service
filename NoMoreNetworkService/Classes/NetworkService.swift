@@ -60,8 +60,8 @@ public extension NetworkService {
     }
 
     @discardableResult
-    func sendDataRequest<RequestModel: NetworkRequestBaseModel, ResponseModel: DecodableNetworkResponseModel>(
-        requestModel: RequestModel,
+    func sendDataRequest<ResponseModel: DecodableNetworkResponseModel>(
+        requestModel: any NetworkRequestBaseModel,
         responseModel: ResponseModel.Type = ResponseModel.self,
         progressHandler: ((Double) -> Void)? = nil,
         completion: @escaping (Result<ResponseModel, Error>) -> Void) -> NetworkURLSessionTask {
@@ -96,7 +96,7 @@ public extension NSError {
         userInfo[NSLocalizedFailureReasonErrorKey] = httpError
         userInfo["data"] = data
 
-        return NSError(domain: "no-more-network.error", code: code, userInfo: userInfo)
+        return NSError(domain: "no-more-network-service.error", code: code, userInfo: userInfo)
     }
 
     var isHTTPError: Bool {

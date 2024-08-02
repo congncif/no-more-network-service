@@ -27,7 +27,7 @@ final class NetworkServiceProvider: NetworkService {
     lazy var operationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.name = "no-more-network.request.operation-queue"
-        queue.qualityOfService = .utility
+        queue.qualityOfService = .userInitiated
         queue.maxConcurrentOperationCount = 3
         return queue
     }()
@@ -38,9 +38,17 @@ final class NetworkServiceProvider: NetworkService {
         let task = NetworkOperationTask(operation: operation)
         return task
     }
+
+    deinit {
+        operationQueue.cancelAllOperations()
+    }
 }
 
-struct NetworkOperationTask: NetworkURLSessionTask {
+final class NetworkOperationTask: NetworkURLSessionTask {
+    init(operation: NetworkTaskExecutionOperation?) {
+        self.operation = operation
+    }
+
     weak var operation: NetworkTaskExecutionOperation?
 
     let taskIdentifier: Int = UUID().hashValue

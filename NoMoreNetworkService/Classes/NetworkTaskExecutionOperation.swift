@@ -116,42 +116,68 @@ final class NetworkTaskExecutionOperation: Operation {
             state = .executing
             let task = self.task
 
+//            let completion = self.completion
+
             requestAdapter.adapt(urlRequest) { [weak self] result in
+                guard let self else {
+//                    This will return cancel error
+//                    completion(result)
+                    return
+                }
                 switch result {
                 case let .success(request):
-                    self?.pendingTask = self?.performRequest(request, task: task, progressHandler: self?.progressHandler, completion: { [weak self] responseResult in
-                        self?.responseAdapter.adapt(responseResult, completion: { [weak self] newResult in
+                    self.pendingTask = self.performRequest(request, task: task, progressHandler: self.progressHandler, completion: { [weak self] responseResult in
+                        guard let self else {
+//                            This will return cancel error
+//                            completion(responseResult)
+                            return
+                        }
+                        self.responseAdapter.adapt(responseResult, completion: { [weak self] newResult in
+                            guard let self else {
+//                                This will return cancel error
+//                                completion(newResult)
+                                return
+                            }
                             switch newResult {
                             case .success:
-                                self?.completion(newResult)
-                                self?.state = .finished
+                                self.completion(newResult)
+                                self.state = .finished
                             case let .failure(error):
-                                self?.attemptRetry(dueTo: error, rawResult: newResult)
+                                self.attemptRetry(dueTo: error, rawResult: newResult)
                             }
                         })
                     })
                 case let .failure(error):
-                    self?.completion(.failure(error))
-                    self?.state = .finished
+                    self.completion(.failure(error))
+                    self.state = .finished
                 }
             }
         }
     }
 
     private func attemptRetry(dueTo error: any Error, rawResult: Result<Data, Error>) {
+        let completion = self.completion
+
         guard retryCount < maxRetries else {
             completion(rawResult)
             state = .finished
             return
         }
+
         retryCount += 1
         retrier.retry(dueTo: error, completion: { [weak self] shouldRetry in
+            guard let self else {
+//                This will return cancel error
+//                completion(rawResult)
+                return
+            }
+
             switch shouldRetry {
             case .retryNow:
-                self?.main()
+                self.main()
             case .doNotRetry:
-                self?.completion(rawResult)
-                self?.state = .finished
+                self.completion(rawResult)
+                self.state = .finished
             }
         })
     }
