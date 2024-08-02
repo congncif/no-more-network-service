@@ -109,15 +109,11 @@ class ViewController: UIViewController {
 }
 
 struct EmployeeRequest: NetworkRequestModel {
-    var host: String = "dummy.restapiexample.com"
+    var host: String { "dummy.restapiexample.com" }
 
-    var path: String = "/api/v1/employees"
+    var path: String { "/api/v1/employees" }
 
-    var method: String = "GET"
-
-    var additionalHeaders: [String: String] {
-        ["XXX": "YYY"]
-    }
+    var method: String { "GET" }
 }
 
 struct Response<Model: Decodable>: DecodableNetworkResponseModel {

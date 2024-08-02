@@ -212,6 +212,41 @@ public extension EncodableNetworkRequestModel {
     var body: Data? {
         try? encoder.encode(self)
     }
+
+    var additionalHeaders: [String: String] {
+        ["Content-Type": "application/json"]
+    }
+}
+
+public protocol URLEncodedFormNetworkRequestModel: EncodableNetworkRequestModel {}
+
+public extension URLEncodedFormNetworkRequestModel {
+    var body: Data? {
+        guard let data = try? encoder.encode(self) else {
+            return nil
+        }
+        do {
+            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                var urlComponents = URLComponents()
+                let parameters = convertToStringDictionary(json)
+                urlComponents.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
+
+                if let query = urlComponents.percentEncodedQuery {
+                    return query.data(using: .utf8)
+                } else {
+                    return nil
+                }
+            } else {
+                return nil
+            }
+        } catch {
+            return nil
+        }
+    }
+
+    var additionalHeaders: [String: String] {
+        ["Content-Type": "application/x-www-form-urlencoded"]
+    }
 }
 
 public enum Authorization {
@@ -223,9 +258,9 @@ public enum Authorization {
     public var authorizationToken: String? {
         switch self {
         case let .bearer(token):
-            return "Bearer \(token)"
+            return token.appendingPrefixIfNeeded("Bearer")
         case let .basic(token):
-            return "Basic \(token)"
+            return token.appendingPrefixIfNeeded("Basic")
         case let .raw(token):
             return token
         case .none:
