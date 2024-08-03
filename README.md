@@ -100,7 +100,6 @@ func fetchListOfEmployees() {
 *The following is payload of body request to update employee information*
 
 ```json
-// Payload data
 {
   "name": "Điện Biên Phủ",
   "year_of_birth": 1954
