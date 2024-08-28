@@ -102,7 +102,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func downloadButtonTapped() {
-        let request = URLRequest(url: URL(string: "https://file-examples.com/storage/fe44eeb9cb66ab8ce934f14/2017/10/file_example_PNG_3MB.png")!)
+        let request = URLRequest(url: URL(string: "https://file-examples.com/storage/fe45dfa76e66c6232a111c9/2017/10/file_example_PNG_3MB.png")!)
 
         service.prepare(urlRequest: request)
             .forTask(.download(destinationURL: { suggestedFilename in

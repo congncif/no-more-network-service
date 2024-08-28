@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name = "NoMoreNetworkService"
-  s.version = "1.4.0"
+  s.version = "1.5.0"
   s.summary = "An extension of URLSession for network requesting."
 
   # This description is used to generate tags and improve search results.
@@ -27,7 +27,7 @@ No more needed NetworkService when we can use URLSession for almost of things.
   s.source = { :git => "https://github.com/congncif/no-more-network-service.git", :tag => s.version.to_s }
   s.social_media_url = "https://twitter.com/congncif"
 
-  s.ios.deployment_target = "11.0"
+  s.ios.deployment_target = "12.0"
   s.swift_version = "5"
 
   s.source_files = "NoMoreNetworkService/Classes/**/*"
