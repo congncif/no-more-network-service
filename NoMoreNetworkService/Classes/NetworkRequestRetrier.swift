@@ -88,14 +88,14 @@ public extension NetworkRequestRetrier {
     }
 }
 
-final class FunnelRequestRetrier: NetworkRequestRetrier {
-    let retriers: [NetworkRequestRetrier]
+public final class FunnelRequestRetrier: NetworkRequestRetrier {
+    public let retriers: [NetworkRequestRetrier]
 
-    init(retriers: [NetworkRequestRetrier]) {
+    public init(retriers: [NetworkRequestRetrier]) {
         self.retriers = retriers
     }
 
-    func retry(dueTo error: Error, completion: @escaping (RetryPlan) -> Void) {
+    public func retry(dueTo error: Error, completion: @escaping (RetryPlan) -> Void) {
         retry(dueTo: error, using: retriers, completion: completion)
     }
 

@@ -11,19 +11,19 @@ public protocol NetworkResponseAdapter {
     func adapt(_ responseResult: Result<Data, Error>, completion: @escaping (Result<Data, Error>) -> Void)
 }
 
-final class CompositeResponseAdapter: NetworkResponseAdapter {
-    private let adapters: [NetworkResponseAdapter]
+public final class CompositeResponseAdapter: NetworkResponseAdapter {
+    public let adapters: [any NetworkResponseAdapter]
 
-    public init(adapters: [NetworkResponseAdapter]) {
+    public init(adapters: [any NetworkResponseAdapter]) {
         self.adapters = adapters
     }
 
-    func adapt(_ responseResult: Result<Data, Error>, completion: @escaping (Result<Data, Error>) -> Void) {
+    public func adapt(_ responseResult: Result<Data, Error>, completion: @escaping (Result<Data, Error>) -> Void) {
         adapt(responseResult, using: adapters, completion: completion)
     }
 
     private func adapt(_ responseResult: Result<Data, Error>,
-                       using adapters: [NetworkResponseAdapter],
+                       using adapters: [any NetworkResponseAdapter],
                        completion: @escaping (Result<Data, Error>) -> Void) {
         var pendingAdapters = adapters
 

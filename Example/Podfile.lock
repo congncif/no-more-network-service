@@ -1,5 +1,5 @@
 PODS:
-  - NoMoreNetworkService (1.4.0)
+  - NoMoreNetworkService (1.6.0)
 
 DEPENDENCIES:
   - NoMoreNetworkService (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NoMoreNetworkService: f3e618c5d55f3d7b8f73e7c1bf18ce74184c2a74
+  NoMoreNetworkService: a61e8bcfea9483961168a6d1dcecb1c71e60b575
 
 PODFILE CHECKSUM: 6a366bb8ed4d0271ecfaf777f4a3d733a5db9e15
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
