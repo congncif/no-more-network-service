@@ -52,61 +52,44 @@ public extension NetworkRequestAdapter {
 }
 
 final class RequestAdapterBarrier: NetworkRequestAdapter {
-    init(adapter: any NetworkRequestAdapter) {
+    init(adapter: NetworkRequestAdapter) {
         self.adapter = adapter
     }
 
-    let adapter: any NetworkRequestAdapter
-
+    private let adapter: NetworkRequestAdapter
     private let lock = NSRecursiveLock()
 
-    private var _pendingCompletions: [(Result<URLRequest, any Error>) -> Void] = []
-    private var pendingCompletions: [(Result<URLRequest, any Error>) -> Void] {
-        set {
-            lock.lock()
-            _pendingCompletions = newValue
-            lock.unlock()
-        }
+    private var pendingCompletions: [(Result<URLRequest, Error>) -> Void] = []
+    private var isProcessing = false
 
-        get {
-            lock.lock()
-            defer { lock.unlock() }
-            return _pendingCompletions
-        }
-    }
+    func adapt(_ urlRequest: URLRequest, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        lock.lock()
 
-    private var _isProcessing: Bool = false
-    private var isProcessing: Bool {
-        set {
-            lock.lock()
-            _isProcessing = newValue
-            lock.unlock()
-        }
-
-        get {
-            lock.lock()
-            defer { lock.unlock() }
-            return _isProcessing
-        }
-    }
-
-    func adapt(_ urlRequest: URLRequest, completion: @escaping (Result<URLRequest, any Error>) -> Void) {
         if isProcessing {
             pendingCompletions.append(completion)
-        } else {
-            isProcessing = true
-            adapter.adapt(urlRequest) { [weak self] result in
-                completion(result)
-                self?.complete(result)
-            }
+            lock.unlock()
+            return
+        }
+
+        isProcessing = true
+        pendingCompletions.append(completion)
+
+        lock.unlock()
+
+        adapter.adapt(urlRequest) { [weak self] result in
+            self?.complete(with: result)
         }
     }
 
-    private func complete(_ result: Result<URLRequest, any Error>) {
-        for completion in pendingCompletions {
-            completion(result)
-        }
+    private func complete(with result: Result<URLRequest, any Error>) {
+        lock.lock()
+        let completions = pendingCompletions
         pendingCompletions.removeAll()
         isProcessing = false
+        lock.unlock()
+
+        for completion in completions {
+            completion(result)
+        }
     }
 }

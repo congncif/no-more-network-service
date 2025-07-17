@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		03CB42CAF4A377129F5B1B1E /* Pods_NoMoreNetworkService_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3623E52754A5077A2E9210AE /* Pods_NoMoreNetworkService_Tests.framework */; };
+		3544AF7B2E28A0630001F95F /* RetryBarrierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3544AF7A2E28A05F0001F95F /* RetryBarrierTests.swift */; };
+		3544AF7D2E28A3670001F95F /* NetworkTaskExecutionOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3544AF7C2E28A3670001F95F /* NetworkTaskExecutionOperationTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		607FACEC1AFB9204008FA782 /* RequestAdapterBarrierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* RequestAdapterBarrierTests.swift */; };
 		9C0E93F93A4A2A233541C272 /* Pods_NoMoreNetworkService_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3527BBED8ECCB5202DE4E373 /* Pods_NoMoreNetworkService_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +33,8 @@
 		1320514F406BAB520197EB12 /* Pods-NoMoreNetworkService_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoMoreNetworkService_Example.release.xcconfig"; path = "Target Support Files/Pods-NoMoreNetworkService_Example/Pods-NoMoreNetworkService_Example.release.xcconfig"; sourceTree = "<group>"; };
 		2F8B6D231BC9BF96E99AEB25 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		3527BBED8ECCB5202DE4E373 /* Pods_NoMoreNetworkService_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoMoreNetworkService_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3544AF7A2E28A05F0001F95F /* RetryBarrierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryBarrierTests.swift; sourceTree = "<group>"; };
+		3544AF7C2E28A3670001F95F /* NetworkTaskExecutionOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTaskExecutionOperationTests.swift; sourceTree = "<group>"; };
 		3623E52754A5077A2E9210AE /* Pods_NoMoreNetworkService_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoMoreNetworkService_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* NoMoreNetworkService_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoMoreNetworkService_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -41,7 +45,7 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* NoMoreNetworkService_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoMoreNetworkService_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		607FACEB1AFB9204008FA782 /* RequestAdapterBarrierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapterBarrierTests.swift; sourceTree = "<group>"; };
 		68325FD41618643B2D1C17BF /* NoMoreNetworkService.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = NoMoreNetworkService.podspec; path = ../NoMoreNetworkService.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		75BE789C5BE7B96CB86114E3 /* Pods-NoMoreNetworkService_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoMoreNetworkService_Example.debug.xcconfig"; path = "Target Support Files/Pods-NoMoreNetworkService_Example/Pods-NoMoreNetworkService_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		7C1DAA838328606B06F137CB /* Pods-NoMoreNetworkService_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoMoreNetworkService_Tests.release.xcconfig"; path = "Target Support Files/Pods-NoMoreNetworkService_Tests/Pods-NoMoreNetworkService_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,7 +128,9 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				607FACEB1AFB9204008FA782 /* RequestAdapterBarrierTests.swift */,
+				3544AF7A2E28A05F0001F95F /* RetryBarrierTests.swift */,
+				3544AF7C2E28A3670001F95F /* NetworkTaskExecutionOperationTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -342,7 +348,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				3544AF7B2E28A0630001F95F /* RetryBarrierTests.swift in Sources */,
+				607FACEC1AFB9204008FA782 /* RequestAdapterBarrierTests.swift in Sources */,
+				3544AF7D2E28A3670001F95F /* NetworkTaskExecutionOperationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +490,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GN2TJJDQ3F;
 				INFOPLIST_FILE = NoMoreNetworkService/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -499,7 +507,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GN2TJJDQ3F;
 				INFOPLIST_FILE = NoMoreNetworkService/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -523,7 +531,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -543,7 +551,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

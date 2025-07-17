@@ -14,7 +14,7 @@ public enum NetworkTask {
     case download(destinationURL: (_ suggestedFilename: String?) -> URL?)
 
     public static func download(destinationURL: URL? = nil) -> NetworkTask {
-        return .download(destinationURL: { _ in destinationURL })
+        .download(destinationURL: { _ in destinationURL })
     }
 }
 
@@ -33,11 +33,7 @@ public extension NetworkService {
     func sendDataRequest<ResponseModel: Decodable>(
         _ urlRequest: URLRequest,
         task: NetworkTask = .data,
-        decoder: JSONDecoder = {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            return decoder
-        }(),
+        decoder: JSONDecoder = .snakeCaseDecoder,
         progressHandler: ((Double) -> Void)? = nil,
         completion: @escaping (Result<ResponseModel, Error>) -> Void) -> NetworkURLSessionTask {
         sendDataRequest(urlRequest, task: task, progressHandler: progressHandler) { (result: Result<Data, Error>) in
@@ -130,7 +126,7 @@ public extension NetworkRequestBaseModel {
     var urlParameters: [String: String]? { nil }
 
     func customURLRequest(_ initialRequest: URLRequest) -> URLRequest {
-        return initialRequest
+        initialRequest
     }
 
     func buildURLRequest() -> URLRequest {
@@ -258,13 +254,13 @@ public enum Authorization {
     public var authorizationToken: String? {
         switch self {
         case let .bearer(token):
-            return token.appendingPrefixIfNeeded("Bearer")
+            token.appendingPrefixIfNeeded("Bearer")
         case let .basic(token):
-            return token.appendingPrefixIfNeeded("Basic")
+            token.appendingPrefixIfNeeded("Basic")
         case let .raw(token):
-            return token
+            token
         case .none:
-            return nil
+            nil
         }
     }
 }
@@ -283,12 +279,18 @@ public protocol DecodableNetworkResponseModel: Decodable {
 
 public extension DecodableNetworkResponseModel {
     static var decoder: ResponseModelDecoder {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
+        JSONDecoder.snakeCaseDecoder
     }
 
     static func decodeFromData(_ data: Data) throws -> Self {
         try decoder.decode(Self.self, from: data)
+    }
+}
+
+public extension JSONDecoder {
+    static var snakeCaseDecoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
     }
 }

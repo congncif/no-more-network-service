@@ -23,62 +23,45 @@ final class NoRetrier: NetworkRequestRetrier {
 }
 
 final class RetryBarrier: NetworkRequestRetrier {
-    init(retrier: NetworkRequestRetrier) {
+    init(retrier: any NetworkRequestRetrier) {
         self.retrier = retrier
     }
 
-    let retrier: NetworkRequestRetrier
-
+    private let retrier: any NetworkRequestRetrier
     private let lock = NSRecursiveLock()
 
-    private var _pendingCompletions: [(RetryPlan) -> Void] = []
-    private var pendingCompletions: [(RetryPlan) -> Void] {
-        set {
-            lock.lock()
-            _pendingCompletions = newValue
-            lock.unlock()
-        }
-
-        get {
-            lock.lock()
-            defer { lock.unlock() }
-            return _pendingCompletions
-        }
-    }
-
-    private var _isProcessing: Bool = false
-    private var isProcessing: Bool {
-        set {
-            lock.lock()
-            _isProcessing = newValue
-            lock.unlock()
-        }
-
-        get {
-            lock.lock()
-            defer { lock.unlock() }
-            return _isProcessing
-        }
-    }
+    private var pendingCompletions: [(RetryPlan) -> Void] = []
+    private var isProcessing: Bool = false
 
     func retry(dueTo error: Error, completion: @escaping (RetryPlan) -> Void) {
+        lock.lock()
+
         if isProcessing {
             pendingCompletions.append(completion)
-        } else {
-            isProcessing = true
-            retrier.retry(dueTo: error) { [weak self] shouldRetry in
-                completion(shouldRetry)
-                self?.complete(shouldRetry)
-            }
+            lock.unlock()
+            return
+        }
+
+        isProcessing = true
+        pendingCompletions.append(completion)
+
+        lock.unlock()
+
+        retrier.retry(dueTo: error) { [weak self] shouldRetry in
+            self?.complete(shouldRetry)
         }
     }
 
     private func complete(_ shouldRetry: RetryPlan) {
-        pendingCompletions.forEach { completion in
-            completion(shouldRetry)
-        }
+        lock.lock()
+        let completions = pendingCompletions
         pendingCompletions.removeAll()
         isProcessing = false
+        lock.unlock()
+
+        for completion in completions {
+            completion(shouldRetry)
+        }
     }
 }
 

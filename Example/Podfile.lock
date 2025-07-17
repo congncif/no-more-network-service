@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  NoMoreNetworkService: a61e8bcfea9483961168a6d1dcecb1c71e60b575
+  NoMoreNetworkService: c206b269f9ec61a7a7204e94cb18fbc05d84c760
 
 PODFILE CHECKSUM: 6a366bb8ed4d0271ecfaf777f4a3d733a5db9e15
 
