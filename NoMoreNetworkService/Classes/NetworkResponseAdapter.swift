@@ -43,9 +43,13 @@ public final class CompositeResponseAdapter: NetworkResponseAdapter {
         let adapter = pendingAdapters.removeFirst()
 
         adapter.adapt(responseResult) { [weak self] result in
+            guard let self else {
+                completion(.failure(NSError(domain: "NoMoreNetworkService.CompositeResponseAdapter", code: -1, userInfo: [NSLocalizedDescriptionKey: "Adapter has been deallocated"])))
+                return
+            }
             switch result {
             case .success:
-                self?.adapt(result, using: pendingAdapters, completion: completion)
+                adapt(result, using: pendingAdapters, completion: completion)
             case .failure:
                 completion(result)
             }

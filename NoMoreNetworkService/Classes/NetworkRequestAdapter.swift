@@ -35,9 +35,13 @@ public final class CompositeRequestAdapter: NetworkRequestAdapter {
         let adapter = pendingAdapters.removeFirst()
 
         adapter.adapt(urlRequest) { [weak self] result in
+            guard let self else {
+                completion(.failure(NSError(domain: "NoMoreNetworkService.CompositeRequestAdapter", code: -1, userInfo: [NSLocalizedDescriptionKey: "Adapter has been deallocated"])))
+                return
+            }
             switch result {
             case let .success(newRequest):
-                self?.adapt(newRequest, using: pendingAdapters, completion: completion)
+                adapt(newRequest, using: pendingAdapters, completion: completion)
             case .failure:
                 completion(result)
             }
@@ -78,6 +82,17 @@ final class RequestAdapterBarrier: NetworkRequestAdapter {
 
         adapter.adapt(urlRequest) { [weak self] result in
             self?.complete(with: result)
+        }
+    }
+
+    deinit {
+        lock.lock()
+        let completions = pendingCompletions
+        pendingCompletions.removeAll()
+        lock.unlock()
+
+        for completion in completions {
+            completion(.failure(NSError(domain: "NoMoreNetworkService.RequestAdapterBarrier", code: -1, userInfo: [NSLocalizedDescriptionKey: "Adapter has been deallocated"])))
         }
     }
 

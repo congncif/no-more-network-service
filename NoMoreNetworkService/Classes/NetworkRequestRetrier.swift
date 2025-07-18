@@ -52,6 +52,17 @@ final class RetryBarrier: NetworkRequestRetrier {
         }
     }
 
+    deinit {
+        lock.lock()
+        let completions = pendingCompletions
+        pendingCompletions.removeAll()
+        lock.unlock()
+
+        for completion in completions {
+            completion(.doNotRetry)
+        }
+    }
+
     private func complete(_ shouldRetry: RetryPlan) {
         lock.lock()
         let completions = pendingCompletions
@@ -95,9 +106,13 @@ public final class FunnelRequestRetrier: NetworkRequestRetrier {
         let retrier = pendingRetriers.removeFirst()
 
         retrier.retry(dueTo: error) { [weak self] plan in
+            guard let self else {
+                completion(.doNotRetry)
+                return
+            }
             switch plan {
             case .doNotRetry:
-                self?.retry(dueTo: error, using: pendingRetriers, completion: completion)
+                retry(dueTo: error, using: pendingRetriers, completion: completion)
             case .retryNow:
                 completion(plan)
             }
