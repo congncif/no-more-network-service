@@ -62,49 +62,60 @@ final class RequestAdapterBarrier: NetworkRequestAdapter {
 
     private let adapter: NetworkRequestAdapter
     private let lock = NSRecursiveLock()
-
-    private var pendingCompletions: [(Result<URLRequest, Error>) -> Void] = []
+    private var requestQueue: [(request: URLRequest, completion: (Result<URLRequest, Error>) -> Void)] = []
     private var isProcessing = false
 
     func adapt(_ urlRequest: URLRequest, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         lock.lock()
 
+        requestQueue.append((urlRequest, completion))
+
         if isProcessing {
-            pendingCompletions.append(completion)
             lock.unlock()
             return
         }
 
         isProcessing = true
-        pendingCompletions.append(completion)
-
+        let currentRequest = requestQueue.first!
         lock.unlock()
 
-        adapter.adapt(urlRequest) { [weak self] result in
-            self?.complete(with: result)
+        adapter.adapt(currentRequest.request) { [weak self] result in
+            self?.handleCompletion(result: result)
         }
     }
 
     deinit {
         lock.lock()
-        let completions = pendingCompletions
-        pendingCompletions.removeAll()
-        lock.unlock()
-
-        for completion in completions {
-            completion(.failure(NSError(domain: "NoMoreNetworkService.RequestAdapterBarrier", code: -1, userInfo: [NSLocalizedDescriptionKey: "Adapter has been deallocated"])))
-        }
-    }
-
-    private func complete(with result: Result<URLRequest, any Error>) {
-        lock.lock()
-        let completions = pendingCompletions
-        pendingCompletions.removeAll()
+        let currentQueue = requestQueue
+        requestQueue.removeAll()
         isProcessing = false
         lock.unlock()
 
-        for completion in completions {
-            completion(result)
+        for (_, completion) in currentQueue {
+            completion(.failure(NSError(domain: "RequestAdapterBarrier", code: -1, userInfo: [NSLocalizedDescriptionKey: "Adapter has been deallocated"])))
+        }
+    }
+
+    private func handleCompletion(result: Result<URLRequest, any Error>) {
+        lock.lock()
+
+        guard !requestQueue.isEmpty else {
+            isProcessing = false
+            lock.unlock()
+            return
+        }
+
+        let (_, completion) = requestQueue.removeFirst()
+        completion(result)
+
+        if let nextRequest = requestQueue.first {
+            lock.unlock()
+            adapter.adapt(nextRequest.request) { [weak self] result in
+                self?.handleCompletion(result: result)
+            }
+        } else {
+            isProcessing = false
+            lock.unlock()
         }
     }
 }
